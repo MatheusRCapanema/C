@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#define MAX 100
+
+typedef struct NO{
+    int dado;
+    struct NO * prox;
+}NO;
+typedef struct pilha{
+    NO * topo;
+}pilha;
+
+int iniciado(pilha *p){
+    p->topo = NULL;
+}
+int empilha(int dado, pilha *p){
+    NO *ptr=(NO*)malloc( sizeof(NO));
+    if(ptr == NULL){
+        printf("Erro de alocação dd NÓ.");
+        return 0;
+    }else{
+        ptr->dado = dado;
+        ptr->prox = p->topo;
+        p->topo = ptr;
+    }
+}
+int desempilha(pilha *p){
+    NO* ptr = p->topo;
+    int dado;
+    if(ptr == NULL){
+        printf("\n Pilha Vazia\n");
+    }else{
+        p->topo = ptr->prox;
+        ptr->prox = NULL;
+        dado = ptr->dado;
+        free(ptr);
+        return dado;
+    }
+}
+void imprimir_pilha(pilha *p){
+    NO* ptr= p->topo;
+    if(ptr == NULL){
+        printf("\n Pilha Vazia\n");
+    }else{
+        while(ptr != NULL){
+            printf("\n %d \n",ptr->dado);
+            ptr = ptr->prox;
+        }
+    }
+
+}
+int main(){
+    pilha * p1 = (pilha*) malloc(sizeof(p1));
+    if(p1 == NULL){
+        printf("\n Erro ao alocar a pilha.\n");
+    }else{
+        iniciado(p1);
+        empilha(10,p1);
+        empilha(20,p1);
+        empilha(30,p1);
+        imprimir_pilha(p1);
+        printf("\n-----------\n");
+        desempilha(p1);
+        imprimir_pilha(p1);
+        printf("\n-----------\n");
+        desempilha(p1);
+        imprimir_pilha(p1);
+        desempilha(p1);
+        printf("\n-----------\n");
+        imprimir_pilha(p1);
+        printf("\n-----------\n");
+    }
+}
