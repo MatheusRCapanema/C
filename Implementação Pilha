@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+typedef struct{
+    int item[MAX];
+    int topo;
+}tpilha;
+
+void tpilha_start(tpilha *p){
+    p->topo = -1;
+
+}
+int tpilha_vazia(tpilha *p){
+    if (p->topo == -1){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+int tpilha_cheia(tpilha *p){
+    if (p->topo==MAX-1){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+void tpilha_insere(tpilha *p, int x){
+    if(tpilha_cheia(p)==1){
+        printf("\n Erro Pilha cheia \n");
+    }else{
+        p->topo++;
+        p->item[p->topo] = x;
+    }
+}
+int tpilha_remover(tpilha *p) {
+    int aux;
+    if (tpilha_vazia(p) == 1) {
+        printf("\n Erro: Pilha Vazia \n");
+    } else {
+        aux = p->item[p->topo];
+        p->topo--;
+        return aux;
+    }
+}
+int main(){
+    tpilha *p = (tpilha*) malloc(sizeof(tpilha));
+    tpilha_start(p);
+    tpilha_insere(p, 1);
+    tpilha_insere(p, 2);
+    tpilha_insere(p, 3);
+
+    int aux;
+    aux = tpilha_remover(p);
+    printf("\n SAIU: %d", aux);
+    aux = tpilha_remover(p);
+    printf("\n SAIU: %d", aux);
+    aux = tpilha_remover(p);
+    printf("\n SAIU: %d", aux);
+    aux = tpilha_remover(p);
+    printf("\n SAIU: %d", aux);
+    return 0;
+}
