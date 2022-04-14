@@ -6,7 +6,7 @@
 typedef struct Registro{
     int valor;
     struct NO * prox;
-}NO;
+}registro;
 typedef struct pilha{
     NO * topo;
 }pilha;
