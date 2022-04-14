@@ -16,9 +16,9 @@ int iniciado(pilha *p){
     p->topo = NULL;
 }
 int empilha(int dado, pilha *p){
-    NO *ptr=(NO*)malloc( sizeof(NO));
+    registro *novo=(registro*)malloc( sizeof(registro));
     if(ptr == NULL){
-        printf("Erro de alocação dd NÓ.");
+        printf("Erro de alocação do registro.");
         return 0;
     }else{
         ptr->dado = dado;
