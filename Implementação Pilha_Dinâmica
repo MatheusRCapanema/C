@@ -5,7 +5,7 @@
 
 typedef struct Registro{
     int valor;
-    struct NO * prox;
+    struct Registro * prox;
 }registro;
 typedef struct pilha{
     NO * topo;
