@@ -12,7 +12,7 @@ typedef struct pilha{
 }pilha;
 
 int iniciado(pilha *p){
-    Registro *novo=(registro*)malloc( sizeof(registro));
+    Pilha *novo=(pilha*)malloc( sizeof(pilha));
     p->topo = NULL;
 }
 int empilha(int dado, pilha *p){
