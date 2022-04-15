@@ -73,7 +73,7 @@ int empty(lista *l){
         }
     }
 }*/
-int pop(lista *l, int numero){
+void pop(lista *l){
     if(l->inicio==NULL) {
         return 0;
     }else{
