@@ -43,7 +43,7 @@ void push(lista *l, int numero){
     }
     l->qtd++;
 }
-/*
+
 void mostrar_lista(lista *l){
     registro *aux;
     if(l->inicio==NULL){
@@ -55,7 +55,7 @@ void mostrar_lista(lista *l){
             aux=aux->prox;
         }
     }
-}*/
+}
 /*int buscar(lista *l,int numero){
     if(l->inicio==NULL) {
         return 0;
@@ -115,6 +115,7 @@ void menu(lista *l){
         printf("\n 01 - Incluir na fila.");
         printf("\n 02 - Mostrar inicio.");
         printf("\n 03 - Remover numero na fila.");
+        printf("\n 04 - Mostrar a fila.");
         printf("\n 10 - Sair\n");
         scanf("%d", &opcao);
 
@@ -141,6 +142,9 @@ void menu(lista *l){
                     printf("\n Numero nao removido ou pilha vazia");
                 }
                 break;
+          case 4:
+              mostrar_lista(l);
+          break;
             case 10:
                 printf("\n Saindo do programa");
                 break;
