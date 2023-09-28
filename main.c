@@ -6,23 +6,39 @@
 
 bool grafo[TAMANHO][TAMANHO];
 int distancia[TAMANHO];
-int n, t, m, x, y;
+int n, e, t, m, x, y;
 
 int fila[TAMANHO];
 int inicio = -1, fim = -1;
 
-void bfs(int start) {
-    fila[++fim] = start;
-    distancia[start] = 0;
+void enfileirar(int nodo) {
+    if (fim == TAMANHO - 1)
+        return;
+    if (inicio == -1)
+        inicio = 0;
+    fila[++fim] = nodo;
+}
 
-    while (inicio != fim) {
-        inicio = (inicio + 1) % TAMANHO;
-        int nodo = fila[inicio];
+int desenfileirar() {
+    if (inicio == -1)
+        return -1;
+    int val = fila[inicio];
+    if (inicio == fim)
+        inicio = fim = -1;
+    else
+        inicio++;
+    return val;
+}
+
+void bfs(int inicio) {
+    enfileirar(inicio);
+    distancia[inicio] = 0;
+    while (fim != -1) { 
+        int nodo = desenfileirar();
         for (int i = 1; i <= n; i++) {
             if (grafo[nodo][i] && distancia[i] == -1) {
                 distancia[i] = distancia[nodo] + 1;
-                fim = (fim + 1) % TAMANHO;
-                fila[fim] = i;
+                enfileirar(i);
             }
         }
     }
@@ -32,22 +48,26 @@ int main() {
     scanf("%d", &t);
     for (int cs = 1; cs <= t; cs++) {
         scanf("%d%d", &n, &m);
+
         memset(grafo, 0, sizeof grafo);
         memset(distancia, -1, sizeof distancia);
 
         for (int i = 0; i < m; i++) {
             scanf("%d%d", &x, &y);
-            grafo[x][y] = grafo[y][x] = 1;
+            grafo[x][y] = grafo[y][x] = 1;  // Marcar a aresta no grafo
         }
 
-        bfs(1);
-
         int maximo = 0;
+        bfs(1);  // Iniciar BFS pelo primeiro nodo
+
         for (int j = 1; j <= n; j++) {
-            maximo = (distancia[j] > maximo) ? distancia[j] : maximo;
+            if (distancia[j] > maximo) {
+                maximo = distancia[j];
+            }
         }
 
         printf("%d\n", maximo);
     }
+
     return 0;
 }
