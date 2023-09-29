@@ -9,12 +9,12 @@ int distancias[MAX_NOS];
 int fila[MAX_NOS];
 int inicio, fim;
 
-int bfs(int inicio, int n) {
+int bfs(int partida, int n) {
     for (int i = 0; i < n; i++) visitado[i] = false;
     inicio = 0; fim = -1;
 
-    fila[++fim] = inicio;
-    visitado[inicio] = true;
+    fila[++fim] = partida;
+    visitado[partida] = true;
     int maxDist = 0;
 
     while (inicio <= fim) {
@@ -33,7 +33,7 @@ int bfs(int inicio, int n) {
 
 int main() {
     int n, e, a, b;
-    printf("Digite o número de vértices: ");
+    printf("Digite o número de nós: ");
     scanf("%d", &n);
     printf("Digite o número de arestas: ");
     scanf("%d", &e);
