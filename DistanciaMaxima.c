@@ -1,46 +1,73 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
-#define MAX_NOS 1000
+#define TAMANHO 10000
 
-int grafo[MAX_NOS][MAX_NOS];
-bool visitado[MAX_NOS];
-int distancias[MAX_NOS];
-int fila[MAX_NOS];
-int inicio, fim;
+bool grafo[TAMANHO][TAMANHO];
+int distancia[TAMANHO];
+int n, e, t, m, x, y;
 
-int bfs(int partida, int n) {
-    for (int i = 0; i < n; i++) visitado[i] = false;
-    inicio = 0; fim = -1;
+int fila[TAMANHO];
+int inicio = -1, fim = -1;
 
-    fila[++fim] = partida;
-    visitado[partida] = true;
-    int maxDist = 0;
+void enfileirar(int nodo) {
+    if (fim == TAMANHO - 1)
+        return;
+    if (inicio == -1)
+        inicio = 0;
+    fila[++fim] = nodo;
+}
 
-    while (inicio <= fim) {
-        int atual = fila[inicio++];
-        for (int i = 0; i < n; i++) {
-            if (grafo[atual][i] && !visitado[i]) {
-                visitado[i] = true;
-                distancias[i] = distancias[atual] + 1;
-                fila[++fim] = i;
-                if (distancias[i] > maxDist) maxDist = distancias[i];
+int desenfileirar() {
+    if (inicio == -1)
+        return -1;
+    int val = fila[inicio];
+    if (inicio == fim)
+        inicio = fim = -1;
+    else
+        inicio++;
+    return val;
+}
+
+void bfs(int inicio) {
+    enfileirar(inicio);
+    distancia[inicio] = 0;
+    while (fim != -1) { 
+        int nodo = desenfileirar();
+        for (int i = 1; i <= n; i++) {
+            if (grafo[nodo][i] && distancia[i] == -1) {
+                distancia[i] = distancia[nodo] + 1;
+                enfileirar(i);
             }
         }
     }
-    return maxDist;
 }
 
 int main() {
-    int n, e, a, b;
-    printf("Digite o número de nós: ");
-    scanf("%d", &n);
-    printf("Digite o número de arestas: ");
-    scanf("%d", &e);
-    for (int i = 0; i < e; i++) {
-        scanf("%d %d", &a, &b);
-        grafo[a][b] = grafo[b][a] = 1;
+    scanf("%d", &t);
+    for (int cs = 1; cs <= t; cs++) {
+        scanf("%d%d", &n, &m);
+
+        memset(grafo, 0, sizeof grafo);
+        memset(distancia, -1, sizeof distancia);
+
+        for (int i = 0; i < m; i++) {
+            scanf("%d%d", &x, &y);
+            grafo[x][y] = grafo[y][x] = 1;  // Marcar a aresta no grafo
+        }
+
+        int maximo = 0;
+        bfs(1);  // Iniciar BFS pelo primeiro nodo
+
+        for (int j = 1; j <= n; j++) {
+            if (distancia[j] > maximo) {
+                maximo = distancia[j];
+            }
+        }
+
+        printf("%d\n", maximo);
     }
-    printf("Diâmetro da árvore: %d\n", bfs(bfs(0, n), n));
+
     return 0;
 }
